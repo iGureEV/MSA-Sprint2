@@ -1,0 +1,57 @@
+@startuml
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+System_Boundary(hotelio, "Hotelio Monolith") {
+
+  Container(monolith, "Monolith Application", "Spring Boot", "Legacy app exposing REST endpoints for hotel booking") {
+
+    ' Controllers
+    Component(hotelController, "HotelController", "Spring MVC", "/api/hotels")
+    Component(userController, "UserController", "Spring MVC", "/api/users")
+    Component(bookingController, "BookingController", "Spring MVC", "/api/bookings")
+    Component(promoController, "PromoCodeController", "Spring MVC", "/api/promos")
+    Component(reviewController, "ReviewController", "Spring MVC", "/api/reviews")
+
+    ' Services
+    Component(bookingService, "BookingService", "Java Service", "Проверка и создание заказов")
+    Component(hotelService, "HotelService", "Java Service", "Управление отелями")
+    Component(userService, "UserService", "Java Service", "Проверка статуса пользователя и черный список")
+    Component(promoService, "PromoCodeService", "Java Service", "Применение скидок и правил")
+    Component(reviewService, "ReviewService", "Java Service", "Управление отзывами (об отелях)")
+
+    ' DB
+    ComponentDb(postgres, "Monolith DB", "PostgreSQL", "Хранилище users, hotels, bookings, reviews, promos")
+
+    ' Controller-Service relations
+    Rel(bookingController, bookingService, "Пользователь")
+    Rel(hotelController, hotelService, "Пользователь")
+    Rel(promoController, promoService, "Пользователь")
+    Rel(reviewController, reviewService, "Пользователь")
+    Rel(userController, userService, "Пользователь")
+
+    ' Service-Service and Service-DB
+    Rel(bookingService, hotelService, "Вызовы")
+    Rel(bookingService, userService, "Вызовы")
+    Rel(bookingService, promoService, "Вызовы")
+    Rel(bookingService, reviewService, "Вызовы")
+
+    Rel(bookingService, postgres, "Чтение/Запись")
+    Rel(userService, postgres, "Чтение")
+    Rel(hotelService, postgres, "Чтение")
+    Rel(promoService, postgres, "Чтение")
+    Rel(reviewService, postgres, "Чтение/Запись")
+  }
+}
+
+Person(user, "User", "Взаимодействует с интерфейсом")
+Rel(user, bookingController, "Пользователь")
+Rel(user, hotelController, "Пользователь")
+Rel(user, promoController, "Пользователь")
+Rel(user, reviewController, "Пользователь")
+Rel(user, userController, "Пользователь")
+@enduml

@@ -1,4 +1,5 @@
-FROM openjdk:17-jdk-slim
+FROM alpine:latest
+RUN apk add --no-cache openjdk17
 
 WORKDIR /app
 

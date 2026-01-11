@@ -1,0 +1,80 @@
+@startuml
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+' Монолит
+System_Boundary(monolith, "Monolith Proxy") {
+
+    ' Controllers
+    Component(bookingController, "BookingController", "Spring MVC", "/api/bookings")
+    Component(hotelController, "HotelController", "Spring MVC", "/api/hotels")
+    Component(promoController, "PromoCodeController", "Spring MVC", "/api/promos")
+    Component(reviewController, "ReviewController", "Spring MVC", "/api/reviews")
+    Component(userController, "UserController", "Spring MVC", "/api/users")
+
+    ' Services
+    Component(bookingService, "BookingService", "Null-check", "прокси к Микросервису Booking")
+    Component(hotelService, "HotelService", "Java Service", "Управление отелями")
+    Component(userService, "UserService", "Java Service", "Проверка статуса пользователя и черный список")
+    Component(promoService, "PromoCodeService", "Java Service", "Применение скидок и правил")
+    Component(reviewService, "ReviewService", "Java Service", "Управление отзывами (об отелях)")
+
+    ' DB
+    ComponentDb(postgres, "Monolith DB", "PostgreSQL", "Общее хранилище монолита: users, hotels, bookings, reviews, promos")
+
+    ' Controller-Service relations
+    Rel(hotelController, hotelService, "Пользователь")
+    Rel(promoController, promoService, "Пользователь")
+    Rel(reviewController, reviewService, "Пользователь")
+    Rel(userController, userService, "Пользователь")
+
+    Rel(userService, postgres, "Чтение")
+    Rel(hotelService, postgres, "Чтение")
+    Rel(promoService, postgres, "Чтение")
+    Rel(reviewService, postgres, "Чтение/Запись")
+}
+
+' Микросервис Booking
+System_Boundary(booking, "Микросервис Booking") {
+    Component(bookingControllerMs, "BookingController", "Receives", "Сервер gRPC")
+    Component(bookingServiceMs, "BookingService", "Java Service", "Проверка и создание заказов")
+    ComponentDb(dbBooking, "Booking DB", "PostgreSQL", "Локальная БД Booking")
+}
+
+' Микросервис Booking History
+System_Boundary(bookingHistory, "Микросервис Booking History") {
+    Component(bookingHistoryControllerMs, "BookingHistoryController", "Receives", "Клиент Kafka")
+    Component(bookingHistoryServiceMs, "BookinHistorygService", "Java Service", "Проверка и создание заказов")
+    ComponentDb(dbBookingHistory, "Booking History DB", "PostgreSQL", "Локальная БД Booking History")
+}
+
+' Брокер сообщений Kafka
+Container(kafka, "Брокер сообщений", "Kafka", "Буфер сообщений")
+
+Person(user, "User", "Взаимодействует с интерфейсом")
+
+Rel(user, bookingController, "Пользователь")
+Rel(bookingController, bookingService, "Пользователь")
+Rel(bookingService, bookingControllerMs, "gRPC")
+Rel(user, hotelController, "Пользователь")
+Rel(user, promoController, "Пользователь")
+Rel(user, reviewController, "Пользователь")
+Rel(user, userController, "Пользователь")
+
+Rel(bookingControllerMs, bookingServiceMs, "Вызов")
+Rel(bookingServiceMs, userController, "REST")
+Rel(bookingServiceMs, hotelController, "REST")
+Rel(bookingServiceMs, promoController, "REST")
+Rel(bookingServiceMs, reviewController, "REST")
+Rel(bookingServiceMs, dbBooking, "Чтение/Запись")
+
+Rel(bookingHistoryControllerMs, bookingHistoryServiceMs, "Вызов")
+Rel(bookingHistoryServiceMs, dbBookingHistory, "Чтение/Запись")
+
+' Kafka
+Rel_D(bookingServiceMs, kafka, "Publish")
+Rel_U(kafka, bookingHistoryControllerMs, "Subscribe")
+
+@enduml

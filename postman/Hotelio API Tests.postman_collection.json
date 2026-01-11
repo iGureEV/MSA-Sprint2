@@ -1,0 +1,495 @@
+{
+	"info": {
+		"_postman_id": "148f68d0-9a4a-4f0a-9b0f-1b1c1d1e1f20",
+		"name": "Hotelio API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"description": "Коллекция для ручного тестирования API Hotelio"
+	},
+	"item": [
+		{
+			"name": "AppUser",
+			"item": [
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/users/{{user_id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/users/{{user_id}}/status",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is User Blacklisted",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/users/{{user_id}}/blacklisted",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"blacklisted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is User Active",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/users/{{user_id}}/active",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is User Authorized",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/users/{{user_id}}/authorized",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"authorized"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is User VIP",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/users/{{user_id}}/vip",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"vip"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Hotel",
+			"item": [
+				{
+					"name": "Get Hotel By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/hotels/{{hotel_id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"hotels",
+								"{{hotel_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is Hotel Operational",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/hotels/{{hotel_id}}/operational",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"hotels",
+								"{{hotel_id}}",
+								"operational"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is Hotel Fully Booked",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/hotels/{{hotel_id}}/fully-booked",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"hotels",
+								"{{hotel_id}}",
+								"fully-booked"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Hotels By City",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/hotels/by-city?city={{city}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"hotels",
+								"by-city"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "{{city}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top Rated Hotels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/hotels/top-rated?city={{city}}&limit=5",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"hotels",
+								"top-rated"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "{{city}}"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "Get Reviews For Hotel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/reviews/hotel/{{hotel_id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"hotel",
+								"{{hotel_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is Hotel Trusted",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/reviews/hotel/{{hotel_id}}/trusted",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"hotel",
+								"{{hotel_id}}",
+								"trusted"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PromoCode",
+			"item": [
+				{
+					"name": "Get Promo By Code",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/promos/{{promo_code}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"promos",
+								"{{promo_code}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is Promo Valid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/promos/{{promo_code}}/valid?isVipUser={{is_vip}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"promos",
+								"{{promo_code}}",
+								"valid"
+							],
+							"query": [
+								{
+									"key": "isVipUser",
+									"value": "{{is_vip}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Promo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/promos/validate",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"promos",
+								"validate"
+							]
+						},
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "{{promo_code}}",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "{{user_id}}",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "List Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/bookings?userId={{user_id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"bookings"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/bookings",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"bookings"
+							]
+						},
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "userId",
+									"value": "{{user_id}}",
+									"type": "text"
+								},
+								{
+									"key": "hotelId",
+									"value": "{{hotel_id}}",
+									"type": "text"
+								},
+								{
+									"key": "promoCode",
+									"value": "{{promo_code}}",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_url",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "user_id",
+			"value": "test-user-1"
+		},
+		{
+			"key": "hotel_id",
+			"value": "test-hotel-1"
+		},
+		{
+			"key": "promo_code",
+			"value": "TESTCODE1"
+		},
+		{
+			"key": "city",
+			"value": "Seoul"
+		},
+		{
+			"key": "is_vip",
+			"value": "false"
+		}
+	]
+}
