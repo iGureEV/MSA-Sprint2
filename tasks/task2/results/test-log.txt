@@ -1,0 +1,196 @@
+➜  task2 git:(main) ✗ ./run-task2.sh                      
+Сборка монолитного приложения...
+
+BUILD SUCCESSFUL in 828ms
+5 actionable tasks: 5 executed
+Копирование JAR-файла в директорию monolith...
+Запуск среды docker-compose...
+[+] up 30/32
+ ✔ Image postgres:15                     Pulled                                                                                                                                 18.4s 
+ ✔ Image confluentinc/cp-kafka:7.2.1     Pulled                                                                                                                                 16.5s 
+ ⠸ Image confluentinc/cp-zookeeper:7.2.1 [⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿] 411.9MB / 412.9MB Pulling                                                                                                25.4s 
+[+] Building 3.7s (30/30) FINISHED                                                                                                                                                    
+ => [internal] load local bake definitions                                                                                                                                       0.0s
+ => => reading from stdin 1.73kB                                                                                                                                                 0.0s
+ => [booking-history-service internal] load build definition from Dockerfile                                                                                                     0.0s
+ => => transferring dockerfile: 150B                                                                                                                                             0.0s
+ => [booking-service internal] load build definition from Dockerfile                                                                                                             0.0s
+ => => transferring dockerfile: 167B                                                                                                                                             0.0s
+ => [monolith-task2 internal] load build definition from Dockerfile                                                                                                              0.0s
+ => => transferring dockerfile: 207B                                                                                                                                             0.0s
+ => [booking-history-service internal] load metadata for docker.io/library/node:24-alpine                                                                                        1.3s
+ => [monolith-task2 internal] load metadata for docker.io/library/alpine:latest                                                                                                  0.9s
+ => [monolith-task2 internal] load .dockerignore                                                                                                                                 0.0s
+ => => transferring context: 2B                                                                                                                                                  0.0s
+ => [monolith-task2 1/4] FROM docker.io/library/alpine:latest@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62                                            0.0s
+ => => resolve docker.io/library/alpine:latest@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62                                                           0.0s
+ => [monolith-task2 internal] load build context                                                                                                                                 0.2s
+ => => transferring context: 63.91MB                                                                                                                                             0.2s
+ => CACHED [monolith-task2 2/4] RUN apk add --no-cache openjdk17                                                                                                                 0.0s
+ => CACHED [monolith-task2 3/4] WORKDIR /app                                                                                                                                     0.0s
+ => [monolith-task2 4/4] COPY hotelio-monolith-1.0.0.jar app.jar                                                                                                                 0.3s
+ => [booking-service internal] load .dockerignore                                                                                                                                0.1s
+ => => transferring context: 2B                                                                                                                                                  0.0s
+ => [booking-history-service internal] load .dockerignore                                                                                                                        0.1s
+ => => transferring context: 2B                                                                                                                                                  0.0s
+ => [monolith-task2] exporting to image                                                                                                                                          2.2s
+ => => exporting layers                                                                                                                                                          1.2s
+ => => exporting manifest sha256:a8c643ff1bb8f7402e9850b8a53afbb4fc2dd41cb0e13c6afae60b271b84450a                                                                                0.0s
+ => => exporting config sha256:485ed07bb10f75ab9a47d22d4bb8b980f2fea4b78872378a4d545fc8380b0a03                                                                                  0.0s
+ => => exporting attestation manifest sha256:3671a62b859453af184a96a1798466c9a84321b225506aaaea9116cbf2c68043                                                                    0.0s
+ => => exporting manifest list sha256:f2b86a563e7393998a836d30c82c7cb2432b8902d57af6376bde237d7ec5fee7                                                                           0.0s
+ => => naming to docker.io/library/task2-monolith-task2:latest                                                                                                                   0.0s
+ => => unpacking to docker.io/library/task2-monolith-task2:latest                                                                                                                1.0s
+ => [booking-service 1/5] FROM docker.io/library/node:24-alpine@sha256:931d7d57f8c1fd0e2179dbff7cc7da4c9dd100998bc2b32afc85142d8efbc213                                          0.0s
+ => => resolve docker.io/library/node:24-alpine@sha256:931d7d57f8c1fd0e2179dbff7cc7da4c9dd100998bc2b32afc85142d8efbc213                                                          0.0s
+ => [booking-history-service internal] load build context                                                                                                                        0.0s
+ => => transferring context: 269B                                                                                                                                                0.0s
+ => [booking-service internal] load build context                                                                                                                                0.0s
+ => => transferring context: 5.19kB                                                                                                                                              0.0s
+ => CACHED [booking-service 2/5] WORKDIR /app                                                                                                                                    0.0s
+ => CACHED [booking-history-service 3/5] COPY package*.json ./                                                                                                                   0.0s
+ => CACHED [booking-history-service 4/5] RUN npm install                                                                                                                         0.0s
+ => CACHED [booking-history-service 5/5] COPY . .                                                                                                                                0.0s
+ => CACHED [booking-service 3/5] COPY package*.json ./                                                                                                                           0.0s
+ => CACHED [booking-service 4/5] RUN npm install                                                                                                                                 0.0s
+ => [booking-service 5/5] COPY . .                                                                                                                                               0.0s
+ => [booking-history-service] exporting to image                                                                                                                                 0.3s
+ => => exporting layers                                                                                                                                                          0.0s
+ => => exporting manifest sha256:6b663516e2b40df15954507c24fb71395726aea7fe1a801f669dd13142ca534a                                                                                0.0s
+ => => exporting config sha256:b6ddb2c28bac493c8058758146caf41947a080b83cd74132b5cd3286fdbbcc4b                                                                                  0.0s
+ => => exporting attestation manifest sha256:2728c0751b22b7a29658ff0754867b533bc5071c60787f05aa2badba863b84fd                                                                    0.0s
+ => => exporting manifest list sha256:a5044d071af79612384bd5a003bf3d3ddf7cbccb82442bf57362506866696cbd                                                                           0.0s
+ => => naming to docker.io/library/task2-booking-history-service:latest                                                                                                          0.0s
+ => => unpacking to docker.io/library/task2-booking-history-service:latest                                                                                                       0.2s
+ => [booking-service] exporting to image                                                                                                                                         0.6s
+ => => exporting layers                                                                                                                                                          0.1s
+ => => exporting manifest sha256:fac068e8775a6f25cfac89e0026c2a59fec3e2cd269f4a9073c41bfb7952ed17                                                                                0.0s
+ => => exporting config sha256:3a330750d89eedcd9e2c356abd943a1dd14c0745476dc701cb2f5b2dfc47db1a                                                                                  0.0s
+ => => exporting attestation manifest sha256:2c16039b6387774fcdc8e248092a94816bca3f0406ac80b69dba2c25979e1a73                                                                    0.0s
+ => => exporting manifest list sha256:c03e5a51ada3f728d7f722d01232315468d3fe10c18fb21be81b9dbd8801a689                                                                           0.0s
+ => => naming to docker.io/library/task2-booking-service:latest                                                                                                                  0.0s
+[+] up 46/46king to docker.io/library/task2-booking-service:latest                                                                                                               0.4s
+ ✔ Image postgres:15                     Pulled                                                                                                                                 18.4s 
+ ✔ Image confluentinc/cp-kafka:7.2.1     Pulled                                                                                                                                 16.5s 
+ ✔ Image confluentinc/cp-zookeeper:7.2.1 Pulled                                                                                                                                 25.4s 
+ ✔ Image task2-monolith-task2            Built                                                                                                                                   3.7s 
+ ✔ Image task2-booking-history-service   Built                                                                                                                                   3.7s 
+ ✔ Image task2-booking-service           Built                                                                                                                                   3.7s 
+ ✔ Volume task2_monolith-db-data         Created                                                                                                                                 0.0s 
+ ✔ Volume task2_booking-db-data          Created                                                                                                                                 0.0s 
+ ✔ Volume task2_booking-history-db-data  Created                                                                                                                                 0.0s 
+ ✔ Container zookeeper                   Created                                                                                                                                 0.4s 
+ ✔ Container booking-history-db          Created                                                                                                                                 0.4s 
+ ✔ Container booking-db                  Created                                                                                                                                 0.4s 
+ ✔ Container hotelio-db                  Healthy                                                                                                                                 6.2s 
+ ✔ Container hotelio-monolith            Created                                                                                                                                 0.0s 
+ ✔ Container kafka                       Created                                                                                                                                 0.0s 
+ ✔ Container booking-service             Created                                                                                                                                 0.0s 
+ ✔ Container booking-history-service     Created                                                                                                                                 0.0s 
+Ожидание готовности сервисов...
+/var/run/postgresql:5432 - accepting connections
+БД монолита готова
+/var/run/postgresql:5432 - accepting connections
+БД сервиса бронирования готова
+/var/run/postgresql:5432 - accepting connections
+БД сервиса истории бронирования готова
+Kafka готова
+Сервис монолита готов
+Сервис бронирования готов через API монолита
+Запуск тестов...
+[+] Building 1.2s (11/11) FINISHED                                                                                                                                     docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                             0.0s
+ => => transferring dockerfile: 417B                                                                                                                                             0.0s
+ => [internal] load metadata for docker.io/library/debian:bullseye-slim                                                                                                          0.9s
+ => [internal] load .dockerignore                                                                                                                                                0.0s
+ => => transferring context: 2B                                                                                                                                                  0.0s
+ => [1/6] FROM docker.io/library/debian:bullseye-slim@sha256:b32674fb57780ad57d7b0749242d3f585f462f4ec4a60ae0adacd945f9cb9734                                                    0.0s
+ => => resolve docker.io/library/debian:bullseye-slim@sha256:b32674fb57780ad57d7b0749242d3f585f462f4ec4a60ae0adacd945f9cb9734                                                    0.0s
+ => [internal] load build context                                                                                                                                                0.0s
+ => => transferring context: 147B                                                                                                                                                0.0s
+ => CACHED [2/6] WORKDIR /app                                                                                                                                                    0.0s
+ => CACHED [3/6] RUN apt-get update && apt-get install -y     curl     postgresql-client     bash     && rm -rf /var/lib/apt/lists/*                                             0.0s
+ => CACHED [4/6] COPY wait-for-it.sh /usr/local/bin/wait-for-it                                                                                                                  0.0s
+ => CACHED [5/6] COPY init-fixtures.sql init-booking-service.sql regress.sh ./                                                                                                   0.0s
+ => CACHED [6/6] RUN chmod +x /usr/local/bin/wait-for-it regress.sh                                                                                                              0.0s
+ => exporting to image                                                                                                                                                           0.2s
+ => => exporting layers                                                                                                                                                          0.0s
+ => => exporting manifest sha256:3182ac33fdfc72a08df02a96bb3327546326aedc0db856fba9328e503562e8bb                                                                                0.0s
+ => => exporting config sha256:7f5a89e505f0ce9c30a5052147840ad9e150796ecb432cb2f5793c4c71ae95da                                                                                  0.0s
+ => => exporting attestation manifest sha256:c52494198801dcf3854fe1e48e09979dc7a6a3ff55a84f9afb568f1604deb7a6                                                                    0.0s
+ => => exporting manifest list sha256:5068c91a3996b80f75527ac6df23b7fb17e9e5e37b29be85b72478ed3411aedb                                                                           0.0s
+ => => naming to docker.io/library/hotelio-test:latest                                                                                                                           0.0s
+ => => unpacking to docker.io/library/hotelio-test:latest                                                                                                                        0.1s
+🏁 Регрессионный тест до миграции Hotelio
+🧪 Проверка подключения к БД...
+🧪 Загрузка фикстур...
+DELETE 0
+DELETE 0
+DELETE 0
+DELETE 0
+DELETE 0
+INSERT 0 4
+INSERT 0 3
+INSERT 0 12
+INSERT 0 3
+INSERT 0 2
+🧪 Проверка подключения к БД...
+🧪 Загрузка фикстур микросервиса бронирования...
+DELETE 0
+INSERT 0 2
+🧪 Выполнение HTTP-тестов...
+
+Тесты пользователей...
+✅ Получение test-user-1 по ID работает
+✅ Статус test-user-1: ACTIVE
+✅ test-user-1 в блэклисте
+✅ test-user-1 активен
+✅ test-user-1 не авторизован (в блэклисте)
+✅ test-user-3 — VIP-пользователь
+✅ test-user-2 авторизован
+
+Тесты отелей...
+✅ test-hotel-1 получен по ID
+✅ test-hotel-1 работает
+✅ test-hotel-3 не работает
+✅ test-hotel-2 полностью забронирован
+✅ Поиск отелей в Сеуле работает
+✅ Топ-отели в Сеуле загружены
+
+Тесты ревью...
+✅ Отзывы test-hotel-1 найдены
+✅ test-hotel-1 признан надёжным
+✅ test-hotel-3 НЕ признан надёжным (ожидаемо)
+
+Тесты промокодов...
+✅ Промокод TESTCODE1 найден
+✅ VIP-промо доступен VIP
+✅ VIP-промо недоступен обычному
+✅ Обычный промо доступен
+✅ Истекший промо недоступен
+✅ POST /validate промо прошёл
+
+Тесты бронирования...
+✅ Все бронирования получены
+✅ Бронирования test-user-2 найдены
+✅ Бронирование прошло (без промо)
+✅ Бронирование с промо прошло
+✅ Отклонено: неактивный пользователь
+✅ Отклонено: недоверенный отель
+✅ Отклонено: отель полностью забронирован
+
+Тесты микросервисной реализации бронирования...
+🧪 Тестирование микросервисной реализации с параметром ms=true
+✅ Все бронирования получены (микросервис)
+✅ Бронирования test-user-2 найдены (микросервис)
+✅ Бронирование прошло (без промо, микросервис)
+✅ Бронирование с промо прошло (микросервис)
+✅ Отклонено: неактивный пользователь (микросервис)
+✅ Отклонено: недоверенный отель (микросервис)
+✅ Отклонено: отель полностью забронирован (микросервис)
+✅ Все HTTP-тесты пройдены!
+Все тесты пройдены!
+Очистка...
+Очистка завершена
+Задание 2 протестировано успешно!
+Очистка...
