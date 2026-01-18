@@ -1,0 +1,63 @@
+➜  task4 git:(main) ✗ kubectl describe pod -l app=booking-service
+Name:             booking-service-54ccc9d957-clh4p
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Sun, 18 Jan 2026 04:48:11 +0300
+Labels:           app=booking-service
+                  pod-template-hash=54ccc9d957
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.5
+IPs:
+  IP:           10.244.0.5
+Controlled By:  ReplicaSet/booking-service-54ccc9d957
+Containers:
+  booking-service:
+    Container ID:   docker://1409d87335f7c163f2c2fa433795c54d7dfd4ea6dd8605606118ec5a30c0d15f
+    Image:          booking-service:latest
+    Image ID:       docker://sha256:30181f6bd1f4907975774eb4dfd2465fe2ef8de24ce28c435a1089c3e7504291
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sun, 18 Jan 2026 04:48:12 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  512Mi
+    Requests:
+      cpu:      250m
+      memory:   256Mi
+    Liveness:   http-get http://:8080/ping delay=10s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:8080/ping delay=5s timeout=1s period=5s #success=1 #failure=3
+    Environment:
+      ENABLE_FEATURE_X:  true
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cb6s4 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-cb6s4:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  23m   default-scheduler  Successfully assigned default/booking-service-54ccc9d957-clh4p to minikube
+  Normal  Pulled     23m   kubelet            Container image "booking-service:latest" already present on machine
+  Normal  Created    23m   kubelet            Created container: booking-service
+  Normal  Started    23m   kubelet            Started container booking-service
