@@ -1,0 +1,61 @@
+Enabling inline tracing for this subgraph. To disable, use ApolloServerPluginInlineTraceDisabled.
+✅ Booking subgraph ready at http://localhost:4001/
+client.ListBookings response.bookings undefined
+client.ListBookings response.bookings [
+  {
+    id: '11',
+    userId: 'test-user-1',
+    hotelId: 'test-hotel-1',
+    promoCode: 'TESTCODE-VIP',
+    discountPercent: 20,
+    price: 80,
+    createdAt: 'Sun Jan 18 2026 00:34:56 GMT+0000 (Coordinated Universal Time)'
+  },
+  {
+    id: '22',
+    userId: 'test-user-2',
+    hotelId: 'test-hotel-1',
+    discountPercent: 0,
+    price: 90,
+    createdAt: 'Sun Jan 18 2026 00:34:56 GMT+0000 (Coordinated Universal Time)'
+  }
+]
+client.ListBookings response.bookings [
+  {
+    id: '11',
+    userId: 'test-user-1',
+    hotelId: 'test-hotel-1',
+    promoCode: 'TESTCODE-VIP',
+    discountPercent: 20,
+    price: 80,
+    createdAt: 'Sun Jan 18 2026 00:34:56 GMT+0000 (Coordinated Universal Time)'
+  },
+  {
+    id: '22',
+    userId: 'test-user-2',
+    hotelId: 'test-hotel-1',
+    discountPercent: 0,
+    price: 90,
+    createdAt: 'Sun Jan 18 2026 00:34:56 GMT+0000 (Coordinated Universal Time)'
+  }
+]
+client.ListBookings response.bookings [
+  {
+    id: '11',
+    userId: 'test-user-1',
+    hotelId: 'test-hotel-1',
+    promoCode: 'TESTCODE-VIP',
+    discountPercent: 20,
+    price: 80,
+    createdAt: 'Sun Jan 18 2026 00:34:56 GMT+0000 (Coordinated Universal Time)'
+  },
+  {
+    id: '22',
+    userId: 'test-user-2',
+    hotelId: 'test-hotel-1',
+    discountPercent: 0,
+    price: 90,
+    createdAt: 'Sun Jan 18 2026 00:34:56 GMT+0000 (Coordinated Universal Time)'
+  }
+]
+      

@@ -2,40 +2,89 @@ import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { buildSubgraphSchema } from '@apollo/subgraph';
 import gql from 'graphql-tag';
+import grpc from '@grpc/grpc-js';
+import protoLoader from '@grpc/proto-loader';
 
 const typeDefs = gql`
-  type Booking @key(fields: "id") {
-    id: ID!
-    userId: String!
-    hotelId: String!
-    promoCode: String
-    discountPercent: Int
-  }
+    extend schema
+        @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
 
-  type Query {
-    bookingsByUser(userId: String!): [Booking]
-  }
+    type Booking @key(fields: "id") {
+        id: ID!
+        userId: String!
+        hotelId: String!
+        promoCode: String
+        discountPercent: Int
+        status: String
+        price: Float
+        createdAt: String
+        hotel: Hotel
+    }
 
+    type Query {
+        bookingsByUser(userId: String!): [Booking]
+    }
+
+    type Hotel @key(fields: "id") {
+        id: ID!
+    }
 `;
 
+// proto для gRPC (./booking.proto из task2)
+const packageDef = protoLoader.loadSync('./booking.proto');
+const grpcObj = grpc.loadPackageDefinition(packageDef);
+const client = new grpcObj.booking.BookingService(
+    'booking-service:9090',
+    grpc.credentials.createInsecure()
+);
+
 const resolvers = {
-  Query: {
-    bookingsByUser: async (_, { userId }, { req }) => {
-		// TODO: Реальный вызов к grpc booking-сервису или заглушка + ACL
+    Query: {
+        bookingsByUser: async (_, { userId }, { req }) => {
+            // ACL: Проверка header userid
+            const userid = req.headers['userid'];
+            if (!userid) {
+                throw new Error('Unauthorized: userid header required');
+            }
+
+            return new Promise((resolve, reject) => {
+                client.ListBookings({ user_id: userId }, (err, response) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    console.log('client.ListBookings response.bookings', response.bookings);
+                    const bookings = (response.bookings || []).map(b => ({ ...b, status: b.status || 'pending' }));
+                    resolve(bookings);
+                });
+            });
+        },
     },
-  },
-  Booking: {
-	  // TODO: Реальный вызов к grpc booking-сервису или заглушка + ACL
-  },
+    Booking: {
+        __resolveReference: async (booking) => {
+            // Federation resolver для Booking by ID (если запрос по ID)
+            return new Promise((resolve, reject) => {
+                client.GetBooking({ id: booking.id }, (err, response) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(response || null);
+                });
+            });
+        },
+        hotel: (booking) => ({ __typename: 'Hotel', id: booking.hotelId }),
+    },
 };
 
 const server = new ApolloServer({
-  schema: buildSubgraphSchema([{ typeDefs, resolvers }]),
+    schema: buildSubgraphSchema([{ typeDefs, resolvers }]),
 });
 
 startStandaloneServer(server, {
-  listen: { port: 4001 },
-  context: async ({ req }) => ({ req }),
+    listen: { port: 4001 },
+    // Пример определения контекста можно
+    // https://www.apollographql.com/docs/apollo-server/data/resolvers#the-contextvalue-argument
+    context: async ({ req }) => ({ req }),
 }).then(() => {
-  console.log('✅ Booking subgraph ready at http://localhost:4001/');
+    console.log('✅ Booking subgraph ready at http://localhost:4001/');
 });
