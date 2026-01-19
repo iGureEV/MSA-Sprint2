@@ -1,0 +1,112 @@
+➜  task5 git:(main) ✗ ./run-all-tests.sh
+🚀 Полный тест Istio конфигурации...
+
+=== 1. ТЕСТ КАНАРЕЕЧНОГО РАЗВЕРТЫВАНИЯ ===
+▶️ Проверка канареечного развертывания (90% v1, 10% v2)...
+Отправка 50 запросов...
+Запрос 1: v1 (no healthy upstream)
+Запрос 2: v1 (no healthy upstream)
+Запрос 3: v1 (no healthy upstream)
+Запрос 4: v1 (no healthy upstream)
+Запрос 5: v1 (no healthy upstream)
+Запрос 6: v1 (no healthy upstream)
+Запрос 7: v1 (no healthy upstream)
+Запрос 8: v1 (no healthy upstream)
+Запрос 9: v1 (no healthy upstream)
+Запрос 10: v1 (no healthy upstream)
+Запрос 11: v1 (no healthy upstream)
+Запрос 12: v1 (no healthy upstream)
+Запрос 13: v1 (no healthy upstream)
+Запрос 14: v1 (no healthy upstream)
+Запрос 15: v1 (no healthy upstream)
+Запрос 16: v1 (no healthy upstream)
+Запрос 17: v1 (no healthy upstream)
+Запрос 18: v2 (pong (Feature X enabled, Version: v2))
+Запрос 19: v1 (no healthy upstream)
+Запрос 20: v2 (pong (Feature X enabled, Version: v2))
+Запрос 21: v1 (no healthy upstream)
+Запрос 22: v1 (no healthy upstream)
+Запрос 23: v1 (no healthy upstream)
+Запрос 24: v1 (no healthy upstream)
+Запрос 25: v1 (no healthy upstream)
+Запрос 26: v1 (no healthy upstream)
+Запрос 27: v1 (no healthy upstream)
+Запрос 28: v1 (no healthy upstream)
+Запрос 29: v1 (no healthy upstream)
+Запрос 30: v1 (no healthy upstream)
+Запрос 31: v1 (no healthy upstream)
+Запрос 32: v1 (no healthy upstream)
+Запрос 33: v1 (no healthy upstream)
+Запрос 34: v2 (pong (Feature X enabled, Version: v2))
+Запрос 35: v1 (no healthy upstream)
+Запрос 36: v1 (no healthy upstream)
+Запрос 37: v1 (no healthy upstream)
+Запрос 38: v1 (no healthy upstream)
+Запрос 39: v1 (no healthy upstream)
+Запрос 40: v1 (no healthy upstream)
+Запрос 41: v1 (no healthy upstream)
+Запрос 42: v1 (no healthy upstream)
+Запрос 43: v1 (no healthy upstream)
+Запрос 44: v1 (no healthy upstream)
+Запрос 45: v2 (pong (Feature X enabled, Version: v2))
+Запрос 46: v1 (no healthy upstream)
+Запрос 47: v1 (no healthy upstream)
+Запрос 48: v1 (no healthy upstream)
+Запрос 49: v1 (no healthy upstream)
+Запрос 50: v1 (no healthy upstream)
+
+📊 Результаты:
+v1 запросов: 46
+v2 запросов: 4
+Соотношение: 46:4
+Процент v2: 8% (ожидается ~10%)
+
+=== 2. ТЕСТ FEATURE FLAG ===
+▶️ Проверка Feature Flag...
+1. Запрос БЕЗ заголовка (должен следовать канареечным правилам):
+no healthy upstream
+2. Запрос С заголовком X-Feature-Enabled: true (должен идти на v2):
+pong (Feature X enabled, Version: v2)
+3. Проверка endpoint /feature (только на v2):
+   Без заголовка:
+Feature X is enabled! (Version: v2) (status: 200)
+   С заголовком:
+Feature X is enabled! (Version: v2) (status: 200)
+
+=== 3. ТЕСТ FALLBACK ===
+▶️ Тестирование fallback...
+Текущие реплики v1: 0
+1. Проверка до остановки v1:
+   Запрос 1: no healthy upstream
+   Запрос 2: no healthy upstream
+   Запрос 3: pong (Feature X enabled, Version: v2)
+
+2. Остановка v1...
+deployment.apps/booking-service-v1 scaled
+   Ожидание 10 секунд для обновления endpoints...
+
+3. Проверка после остановки v1:
+   Запрос 1: no healthy upstream
+   Запрос 2: pong (Feature X enabled, Version: v2)
+   Запрос 3: no healthy upstream
+   Запрос 4: no healthy upstream
+   Запрос 5: no healthy upstream
+
+4. Восстановление v1...
+deployment.apps/booking-service-v1 scaled
+   Готово!
+
+=== 4. ПРОВЕРКА ISTIO ===
+▶️ Проверка установки Istio...
+NAME                                    READY   STATUS    RESTARTS        AGE
+grafana-6c689999f9-dx5w9                1/1     Running   1 (5h26m ago)   5h40m
+istio-egressgateway-7dcdbd74c5-krbxm    1/1     Running   1 (5h26m ago)   5h45m
+istio-ingressgateway-69cfc6566f-xfkwt   1/1     Running   1 (5h26m ago)   5h45m
+istiod-6c844b7969-wr4jk                 1/1     Running   1 (5h26m ago)   5h45m
+jaeger-555f5df568-w5vwp                 1/1     Running   1 (5h26m ago)   5h38m
+kiali-95cffb658-9bjpj                   1/1     Running   2 (5h26m ago)   5h38m
+prometheus-6bd68c5c99-rsd9x             2/2     Running   2 (5h26m ago)   5h40m
+▶️ Проверка Istio инъекции в default namespace...
+"enabled"
+
+✅ Тестирование завершено!

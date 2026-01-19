@@ -1,0 +1,31 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: booking-service
+  namespace: task4-booking-service
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - booking-gateway
+  http:
+    # Правило 1: Фича-флаг -> v2
+    - match:
+        - headers:
+            x-feature-enabled:
+              exact: "true"
+      route:
+        - destination:
+            host: booking-service.task4-booking-service.svc.cluster.local
+            subset: v2
+    
+    # Правило 2: Канареечное развертывание 90/10
+    - route:
+        - destination:
+            host: booking-service.task4-booking-service.svc.cluster.local
+            subset: v1
+          weight: 90
+        - destination:
+            host: booking-service.task4-booking-service.svc.cluster.local
+            subset: v2
+          weight: 10
